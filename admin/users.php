@@ -36,6 +36,7 @@ include ("../database/connection.php");
                     <th>Address</th>
                     <th>Role</th>
                     <th>Register Date</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -46,6 +47,7 @@ include ("../database/connection.php");
                     <th>Address</th>
                     <th>Role</th>
                     <th>Register Date</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
                 <tbody>
@@ -61,6 +63,7 @@ include ("../database/connection.php");
                     <td><?php echo $user["address"];?></td>
                     <td><?php echo $user["role"];?></td>
                     <td><?php echo date("d-M-Y", strtotime($user["create_at"]));?></td>
+                    <td class="text-center"><a href="#" class="mr-2 text-info"><i class="fas fa-user-edit    "></i></a> <a href="#" class="text-danger"><i class="fas fa-trash"></i></a></td>
                   </tr>
                 <?php 
                         }
