@@ -11,10 +11,10 @@
 			if(isset($_GET['action'])&&$_GET['action']=='delete'){
 				del_room();
 			}
-			if(isset($_POST['update_category']))
+			if(isset($_POST['update_room']))
 			
 			{
-				update_category();
+				update_room();
 			}
   ?>
 
@@ -58,7 +58,7 @@
 												echo"<td>{$room_type}</td>";
 												echo"<td><a href='room_type.php?action=delete&r_id={$room_id}'
 												onclick=\"return confirm('Are you sure?')\")>X</a>||
-												<a href='room_type.php?action=edit&r_id={$room_id}'>Edit</a></td>";
+												<a href='update_room.php?action=edit&r_id={$room_id}'>Edit</a></td>";
 												echo"</tr?>";
                       }?>          
                 <tfoot>
