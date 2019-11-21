@@ -30,14 +30,35 @@ include ("../database/connection.php");
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>Id</th>
+                    <th>Number</th>
                     <th>Name</th>
                     <th>Action</th>
                   </tr>
                 </thead>
+                <?php
+										$query="select*from room_type";
+                                        $go_query=mysqli_query($connection,$query);
+                                        $number =1;
+										while($row=mysqli_fetch_array($go_query))
+											{ 
+												$room_id=$row['id'];
+												$room_type=$row['type'];
+								?>
+												
+												<tr>
+												<td><?php echo $number++; ?></td>
+												<td><?php echo $room_type; ?></td>
+											<td class="text-center"><a class="text-info mr-2" href='room_type.php?action=delete&r_id=<?php echo $room_id;?>'
+												onclick=\"return confirm('Are you sure?')\")><i class="fas fa-trash"></i></a>
+												<a class="text-danger" href='room_type.php?action=edit&r_id=<?php echo $room_id;?>'><i class="fas fa-edit"></i></a></td>
+												</tr>
+												
+								<?php
+											}
+								?>
                 <tfoot>
                   <tr>
-                    <th>Id</th>
+                    <th>Number</th>
                     <th>Name</th>
                     <th>Action</th>
                   </tr>
