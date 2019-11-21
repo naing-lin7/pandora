@@ -60,7 +60,7 @@
 												<td><?php echo $room_type; ?></td>
 												<td class='text-center'>
                         <a class='text-info mr-2' href='update_room.php?action=edit&r_id=<?php echo $room_id;?>'><i class='fas fa-edit    '></i></a>
-                        <a class='text-danger' href='room_type.php?action=delete&r_id=<?php echo $room_id;?>' onclick="return confirm('Are you sure?')")><i class='fas fa-trash'></i></a>
+                        <a class='text-danger' href='room_type.php?action=delete&r_id=<?php echo $room_id;?>' onclick="return confirm('Are you sure?')"><i class='fas fa-trash'></i></a>
                         </td>
                     </tr>
                 <?php

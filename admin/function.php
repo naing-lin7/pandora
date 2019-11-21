@@ -105,3 +105,49 @@ function updateRoom(){
             }
         }
 }
+
+function updateUser(){
+    global $name;global $email;global $phone;global $role; global $address;global $connection;
+    global $name_err;global $email_err;global $role_err;global $phone_err;global $create_message;global $status;
+    $name           = $_POST['name'];
+    $email          = $_POST['email'];
+    $phone          = $_POST['phone'];
+    $role           = $_POST['role'];
+    $address        = $_POST['address'];
+    $name_err       = "";
+    $email_err      = "";
+    $role_err       = "";
+    $phone_err      = "";
+    $create_message = "";
+    $status         = "";
+    $user_id        = $_GET["id"];
+    
+    if(isset($_POST['update_user'])){
+        if(empty($name)){
+            $name_err = "Please fill name.";
+        }elseif (empty($email)) {
+            $email_err = "Please fill email.";
+        }elseif (empty($phone)) {
+            $phone_err = "Please fill phone.";
+        }elseif (empty($role)) {
+            $role_err = "Please select role.";
+        }else{
+            $query = "update users set user_name='$name',email='$email',phone_number='$phone',address='$address',role='$role' where id='$user_id'";
+            $run_query = mysqli_query($connection,$query);
+            if($run_query){
+               return "success";
+            }else{
+                $create_message = "Fail to update user.";
+            }
+        }
+    }
+
+    
+}
+function delUser(){
+    global $connection;
+    $user_id=$_GET['id'];
+    $query="delete from users where id='$user_id'";
+    $go_query=mysqli_query($connection,$query);
+
+}

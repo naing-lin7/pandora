@@ -19,7 +19,7 @@
         $user       = mysqli_query($connection,$query);
         $user_row   = mysqli_fetch_array($user);
         if($user_row != null){
-            if($user_row['password'] == $password){
+            if($user_row['password'] == md5($password)){
                 $_SESSION["auth_success"] = ["name" => $user_row['user_name'],"email" => $user_row['email']];
                 header("location: dashboard.php ");
             }else {

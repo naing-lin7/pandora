@@ -5,6 +5,11 @@ include ("../database/connection.php");
   include ("layouts/css.php");
   include ("layouts/header.php");
   include ("layouts/side_bar.php");
+  include ("function.php");
+
+  if(isset($_GET['action']) =='delete'){
+    delUser();
+  }
 ?>
 
     <div id="content-wrapper">
@@ -63,7 +68,9 @@ include ("../database/connection.php");
                     <td><?php echo $user["address"];?></td>
                     <td><?php echo $user["role"];?></td>
                     <td><?php echo date("d-M-Y", strtotime($user["create_at"]));?></td>
-                    <td class="text-center"><a href="#" class="mr-2 text-info"><i class="fas fa-user-edit    "></i></a> <a href="#" class="text-danger"><i class="fas fa-trash"></i></a></td>
+                    <td class="text-center">
+                      <a href="update_user.php?id=<?php echo $user['id'];?>" class="mr-2 text-info"><i class="fas fa-user-edit    "></i></a> 
+                      <a href='users.php?action=delete&id=<?php echo $user['id'];?>' onclick="return confirm('Are you sure?')"class="text-danger"><i class="fas fa-trash"></i></a></td>
                   </tr>
                 <?php 
                         }
