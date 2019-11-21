@@ -79,3 +79,10 @@ function insertRoom(){
         }
      }
 }
+function del_room(){
+    global $connection;
+    $room_id=$_GET['r_id'];
+    $query="delete from room_type where id='$room_id'";
+    $go_query=mysqli_query($connection,$query);
+
+}
