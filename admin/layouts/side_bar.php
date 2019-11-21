@@ -34,5 +34,15 @@
       <a class="dropdown-item" href="add_user.php">Add Users</a>
     </div>
   </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-th-large"></i>
+      <span>Room Type</span></a>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+      <a class="dropdown-item" href="room_type.php">All Room</a>
+    <a class="dropdown-item" href="add_room.php">Add Room</a>
+    </div>
+  </li>
   
 </ul>
