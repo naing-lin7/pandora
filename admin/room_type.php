@@ -48,19 +48,24 @@
                 </thead>
                 <?php
 										$query="select*from room_type";
-										$go_query=mysqli_query($connection,$query);
+                    $go_query=mysqli_query($connection,$query);
+                    $number = 1;
 										while($row=mysqli_fetch_array($go_query))
 											{
-												$room_id=$row['id'];
+                        $room_id=$row['id'];
 												$room_type=$row['type'];
-												echo"<tr>";
-												echo"<td>{$room_id}</td>";
-												echo"<td>{$room_type}</td>";
-												echo"<td><a href='room_type.php?action=delete&r_id={$room_id}'
-												onclick=\"return confirm('Are you sure?')\")>X</a>||
-												<a href='update_room.php?action=edit&r_id={$room_id}'>Edit</a></td>";
-												echo"</tr?>";
-                      }?>          
+                ?>
+										<tr>
+												<td><?php echo $number++; ?></td>
+												<td><?php echo $room_type; ?></td>
+												<td class='text-center'>
+                        <a class='text-info mr-2' href='update_room.php?action=edit&r_id=<?php echo $room_id;?>'><i class='fas fa-edit    '></i></a>
+                        <a class='text-danger' href='room_type.php?action=delete&r_id=<?php echo $room_id;?>' onclick=\"return confirm('Are you sure?')\")><i class='fas fa-trash'></i></a>
+                        </td>
+                    </tr>
+                <?php
+                      }
+                ?>          
                 <tfoot>
                   <tr>
                     <th>Number</th>

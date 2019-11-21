@@ -8,20 +8,12 @@
   include ("layouts/header.php");
   include ("layouts/side_bar.php");
 
-  if(insertRoom() == "success"){
+  if(updateRoom() == "success"){
     echo "<script> location.href='room_type.php'; </script>";
     exit;
   }
-  insertRoom();
+  updateRoom();
 ?>
- <?php
-			if(isset($_POST['update_room']))
-			
-			{
-				update_room();
-			}
-        ?>
-
     <div id="content-wrapper">
 
       <div class="container-fluid">
@@ -56,7 +48,7 @@
 			if(isset($_POST['update_room']))
 			
 			{
-				update_room();
+				updateRoom();
 			}
         ?>
           <form method="POST" id="add_room">
@@ -64,7 +56,13 @@
             <div class="form-row">
               <div class="col-md-12">
                 <div class="form-label-group">
-                  <input type="text" id="name" class="form-control"  name="room_type" autofocus="autofocus" value="<?php echo $type ?>">
+                  <?php
+                    $r_id = $_GET['r_id'];
+                    $query = "select * from room_type where id='$r_id'";
+                    $run_query = mysqli_query($connection,$query);
+                    $row_query = mysqli_fetch_array($run_query);
+                  ?>
+                  <input type="text" id="name" class="form-control"  name="room_type" autofocus="autofocus" value="<?php echo $row_query['type']; ?>">
                   <label for="name">Room Type</label>
                   <?php if($name_err != ""){ ?>
                     <small class="text-danger"><i class="fas fa-exclamation-triangle"></i> <?php echo $name_err;?> </small>
@@ -78,7 +76,7 @@
                 <a href="room_type.php" class="btn btn-danger btn-block"> <i class="fas fa-times-circle"></i> Cancel</a>
              </div>
             <div class="col-md-2 ">
-            <a href="room_type.php" ><button type="submit" name="update_room" class="btn btn-primary btn-block"><i class="fas fa-plus-circle    ">Update</i></button></a>
+            <button type="submit" name="update_room" class="btn btn-primary btn-block"><i class="fas fa-plus-circle    "></i> Update</button>
             </div>
          </div>
         </form>

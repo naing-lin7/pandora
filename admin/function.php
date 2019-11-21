@@ -86,15 +86,22 @@ function del_room(){
     $go_query=mysqli_query($connection,$query);
 
 }
-function update_room(){
-	global $connection;
+function updateRoom(){
+	global $connection;global $row_query;global $name_err;
 	$room_type=$_POST['room_type'];
-	$room_id=$_GET['r_id'];
-	$query="update room_type set type='$room_type' where id='$room_id'";
-	$go_query=mysqli_query($connection,$query);
-	if(!$go_query)
-	{
-		die("QUERY FAILED".mysqli_error($connection));
-	}
- 		header("location:room_type.php");
+    $room_id=$_GET['r_id'];
+    $name_err = "";
+    if(isset($_POST['update_room'])){
+        if(empty($room_type)){
+            $name_err = "Please fill room name";
+        }else{
+            $query="update room_type set type='$room_type' where id='$room_id'";
+            $go_query=mysqli_query($connection,$query);
+            if(!$go_query)
+            {
+                die("QUERY FAILED".mysqli_error($connection));
+            }
+                return "success";
+            }
+        }
 }
