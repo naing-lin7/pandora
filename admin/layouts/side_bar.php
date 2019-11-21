@@ -31,12 +31,8 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
       <a class="dropdown-item" href="users.php">All Users</a>
-      <a class="dropdown-item" href="blank.html">Create Users</a>
+      <a class="dropdown-item" href="add_user.php">Add Users</a>
     </div>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="tables.html">
-      <i class="fas fa-fw fa-table"></i>
-      <span>Tables</span></a>
-  </li>
+  
 </ul>

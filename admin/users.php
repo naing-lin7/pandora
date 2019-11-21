@@ -1,7 +1,6 @@
 <?php
 include ("../database/connection.php");
   include ("php_scripts/auth.php");
-  include ("function.php");
   
   include ("layouts/css.php");
   include ("layouts/header.php");
@@ -24,6 +23,7 @@ include ("../database/connection.php");
         <div class="card mb-3">
           <div class="card-header">
            <strong>All Users</strong>
+           <a href="add_user.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add User</a>
         </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -72,7 +72,6 @@ include ("../database/connection.php");
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
 
       </div>
