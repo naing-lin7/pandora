@@ -56,28 +56,26 @@ function insertRoom(){
     global $connection;global $name_err;
      $room_type     = $_POST['room_type'];
      $name_err      = "";
-	 if($room_type==""){
-			 $name_err = "Please fill room name.";
-		 }
-	 elseif($room_type!="")
-	 	{
-			$query="select * from room_type where type='$room_type'";
-			$ch_query=mysqli_query($connection,$query);
-			$count=mysqli_num_rows($ch_query);
-				if($count>0)
-				{
-					$name_err = "This room is already exist.";
-				}
-				else
-				{
-					$query="insert into room_type(type)values('$room_type')";
-					$go_query=mysqli_query($connection,$query);
-					if(!$go_query)
-					{
-						die("QUERY FAILED".mysqli_error($connection));}
-						else{
-							return "success";
-							}
-						}
-				}
-		}
+     if(isset($_POST['add_room'])){
+        if($room_type==""){
+                $name_err = "Please fill room name.";
+            }
+        elseif($room_type!=""){
+                $query="select * from room_type where type='$room_type'";
+                $ch_query=mysqli_query($connection,$query);
+                $count=mysqli_num_rows($ch_query);
+                    if($count>0){
+                        $name_err = "This room is already exist.";
+                    }
+                    else{
+                        $query="insert into room_type(type)values('$room_type')";
+                        $go_query=mysqli_query($connection,$query);
+                        if(!$go_query){
+                            die("QUERY FAILED".mysqli_error($connection));}
+                            else{
+                                return "success";
+                        }
+                    }
+        }
+     }
+}

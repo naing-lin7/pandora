@@ -49,7 +49,7 @@
                 <div class="form-label-group">
                   <input type="text" id="name" class="form-control" placeholder="Room Type" name="room_type" autofocus="autofocus" value="<?php if(!empty($name)){ echo $name; } ?>">
                   <label for="name">Room Type</label>
-                  <?php if($name_err != Null){ ?>
+                  <?php if($name_err != ""){ ?>
                     <small class="text-danger"><i class="fas fa-exclamation-triangle"></i> <?php echo $name_err;?> </small>
                   <?php  } ?>
                 </div>

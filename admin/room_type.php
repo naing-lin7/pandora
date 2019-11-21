@@ -39,7 +39,7 @@ include ("../database/connection.php");
 										$query="select*from room_type";
                                         $go_query=mysqli_query($connection,$query);
                                         $number =1;
-										while($row=mysqli_fetch_array($go_query))
+                while($row=mysqli_fetch_array($go_query))
 											{ 
 												$room_id=$row['id'];
 												$room_type=$row['type'];
@@ -56,6 +56,7 @@ include ("../database/connection.php");
 								<?php
 											}
 								?>
+                            
                 <tfoot>
                   <tr>
                     <th>Number</th>
