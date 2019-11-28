@@ -20,6 +20,9 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">  
 
+  <!-- summernote -->
+  <link rel="stylesheet" href="vendor/summernote/summernote-bs4.css">
+
   <link href="css/custom.css" rel="stylesheet"> 
 
 </head>

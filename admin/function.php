@@ -1,7 +1,7 @@
 <?php 
  function addUser(){
     global $name;global $email;global $phone;global $role;global $password;global $con_password; global $address;global $connection;
-    global $name_err;global $email_err;global $role_err;global $phone_err;global $password_err;global $con_pass_err;global $create_message;global $status;
+    global $name_err;global $email_err;global $role_err;global $phone_err;global $password_err;global $con_pass_err;global $create_message;
     $name           = $_POST['name'];
     $email          = $_POST['email'];
     $phone          = $_POST['phone'];
@@ -16,7 +16,6 @@
     $password_err   = "";
     $con_pass_err   = "";
     $create_message = "";
-    $status         = "";
     
     if(isset($_POST['add_user'])){
         if(empty($name)){
@@ -86,7 +85,7 @@ function del_room(){
     $go_query=mysqli_query($connection,$query);
 
 }
-function updateRoom(){
+function updateType(){
 	global $connection;global $row_query;global $name_err;
 	$room_type=$_POST['room_type'];
     $room_id=$_GET['r_id'];
@@ -108,7 +107,7 @@ function updateRoom(){
 
 function updateUser(){
     global $name;global $email;global $phone;global $role; global $address;global $connection;
-    global $name_err;global $email_err;global $role_err;global $phone_err;global $create_message;global $status;
+    global $name_err;global $email_err;global $role_err;global $phone_err;global $create_message;
     $name           = $_POST['name'];
     $email          = $_POST['email'];
     $phone          = $_POST['phone'];
@@ -119,7 +118,6 @@ function updateUser(){
     $role_err       = "";
     $phone_err      = "";
     $create_message = "";
-    $status         = "";
     $user_id        = $_GET["id"];
     
     if(isset($_POST['update_user'])){
@@ -150,4 +148,159 @@ function delUser(){
     $query="delete from users where id='$user_id'";
     $go_query=mysqli_query($connection,$query);
 
+}
+
+function addRoom(){
+    global $connection;global $room_name;global $room_category;global $price;global $status;
+
+    global $room_name_err;global $room_category_err;global $price_err;global $status_err;global $create_message;
+
+    $room_name          = $_POST['room_name'];
+    $room_category      = $_POST['room_category'];
+    $price              = $_POST['price'];
+    $status             = $_POST['status'];
+    $room_detail        = $_POST['room_detail'];
+    $room_facilities    = $_POST['room_facilities'];
+    $gallery            = $_FILES['gallery']['name'];
+    $room_name_err      = "";
+    $room_category_err  = "";
+    $price_err          = "";
+    $status_err         = "";
+    $create_message     = "";
+
+    if(isset($_POST['add_room'])){
+        if(empty($room_name)){
+            $room_name_err = "Please fill room name.";
+        }elseif (empty($room_category)) {
+            $room_category_err = "Please choose room category.";
+        }elseif (empty($price)) {
+            $price_err = "Pleae fill price.";
+        }elseif ($status == NULL) {
+            $status_err = "Please choose status.";
+        }else{
+            // Count total files
+            $countfiles = count($_FILES['gallery']['name']);
+            if($countfiles > 0){
+                $gallery_name = "";
+                $uniquesavename=time().'_'.uniqid(rand());
+                
+                // Looping all files
+                for($i=0;$i<$countfiles;$i++){
+                $filename = $uniquesavename.'_'.$_FILES['gallery']['name'][$i];
+                
+                // Upload file
+                move_uploaded_file($_FILES['gallery']['tmp_name'][$i],'room_gallery/'.$filename);
+                $gallery_name .= $filename.",";
+            }
+            }else{
+                $gallery_name = "";
+            }
+            $current_date   = date('Y-m-d h:i:s', time());
+            $query          = "insert into room(name,room_detail,gallery,facilities,room_type,status,price,create_at)";
+            $query         .= "values('$room_name','$room_detail','$gallery_name','$room_facilities','$room_category','$status','$price','$current_date')";
+            $go_query       = mysqli_query($connection,$query);
+            if($go_query){
+                return "success";
+             }else{
+                 $create_message = "Fail to added room.";
+             }
+        }
+    }
+
+}
+function updateRoom(){
+    global $connection;global $room_name;global $room_category;global $price;global $status;
+
+    global $room_name_err;global $room_category_err;global $price_err;global $status_err;global $create_message;
+
+    $room_name          = $_POST['room_name'];
+    $room_category      = $_POST['room_category'];
+    $price              = $_POST['price'];
+    $status             = $_POST['status'];
+    $room_detail        = $_POST['room_detail'];
+    $room_facilities    = $_POST['room_facilities'];
+    $gallery            = $_FILES['gallery']['name'];
+    $room_name_err      = "";
+    $room_category_err  = "";
+    $price_err          = "";
+    $status_err         = "";
+    $create_message     = "";
+    $id                 = $_GET['id'];
+
+    if(isset($_POST['update_room'])){
+        if(empty($room_name)){
+            $room_name_err = "Please fill room name.";
+        }elseif (empty($room_category)) {
+            $room_category_err = "Please choose room category.";
+        }elseif (empty($price)) {
+            $price_err = "Pleae fill price.";
+        }elseif ($status == NULL) {
+            $status_err = "Please choose status.";
+        }else{
+            // Count total files
+            if(!empty($_FILES['gallery']['name'][0])){
+            $countfiles = count($_FILES['gallery']['name']);
+            if($countfiles > 0){
+                $gallery_query  = "select * from room where id='$id'";
+                $get_gallery    = mysqli_query($connection,$gallery_query);
+                $gallery_data   = mysqli_fetch_assoc($get_gallery);
+                if($gallery_data['gallery'] != NULL){
+                    $gallery = $gallery_data['gallery'];
+                    $gallery_toarray = explode(',',$gallery);
+                    foreach($gallery_toarray as $name){
+                        $image = "room_gallery/".$name;
+                        if (file_exists($image)) {
+                            unlink($image);
+                        }
+                    }
+                }
+                $gallery_name = "";
+                $uniquesavename=time().'_'.uniqid(rand());
+                
+                // Looping all files
+                for($i=0;$i<$countfiles;$i++){
+                    $filename = $uniquesavename.'_'.$_FILES['gallery']['name'][$i];
+                    
+                    // Upload file
+                    move_uploaded_file($_FILES['gallery']['tmp_name'][$i],'room_gallery/'.$filename);
+                    $gallery_name .= $filename.",";
+                    }
+                }
+            }else{
+                $gallery_query  = "select * from room where id='$id'";
+                $get_gallery    = mysqli_query($connection,$gallery_query);
+                $gallery_data   = mysqli_fetch_assoc($get_gallery);
+                $gallery_name = $gallery_data['gallery'];
+            }
+            
+            $current_date   = date('Y-m-d h:i:s', time());
+            $query          = "update room set name='$room_name',room_detail='$room_detail',gallery='$gallery_name',facilities='$room_facilities',room_type='$room_category',status='$status',price='$price' where id='$id'";
+            $go_query       = mysqli_query($connection,$query);
+            if($go_query){
+                return "success";
+             }else{
+                 $create_message = "Fail to update room.";
+             }
+        }
+    }
+
+}
+function delRoom(){
+    global $connection;
+    $id=$_GET['id'];
+    $gallery_query  = "select * from room where id='$id'";
+    $get_gallery    = mysqli_query($connection,$gallery_query);
+    $gallery_data   = mysqli_fetch_assoc($get_gallery);
+    if($gallery_data['gallery'] != NULL){
+        $gallery = $gallery_data['gallery'];
+        $gallery_toarray = explode(',',$gallery);
+        foreach($gallery_toarray as $name){
+            $image = "room_gallery/".$name;
+            if (file_exists($image)) {
+                unlink($image);
+             }
+        }
+    }
+    $del_query="delete from room where id='$id'";
+    $go_query=mysqli_query($connection,$del_query);
 }

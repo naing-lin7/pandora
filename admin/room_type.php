@@ -1,104 +1,140 @@
 <?php
-  include ("../database/connection.php");
-  include ("php_scripts/auth.php");
+ session_start();
  
-  include ("layouts/css.php");
-  include ("layouts/header.php");
-  include ("layouts/side_bar.php");
-  include ("function.php");
-?>
- <?php
+ include '../include/connection.php';
+ include '../include/function.php';
+
+ ?>
+        <!--  /*Update Button Click*/  -->  
+        <?php
 			if(isset($_GET['action'])&&$_GET['action']=='delete'){
 				del_room();
 			}
 			if(isset($_POST['update_room']))
-			
-			{
+ 			{
 				update_room();
 			}
+        ?>
+        <!--  /*Update Button Click */  -->
+ 
+<title>Untitled Document</title>
+<link rel="stylesheet" type="text/css" href="../assets/bootstrap.min.css">
+<script type="text/javascript" src="../assets/bootstrap.min.js"></script>
+<script type="text/javascript" src="../assets/jquery.js"></script>
+
+</style>
+</head>
+
+<body>
+<!--  /* header */  -->
+<?php
+   
+?>
+  <div class="container top">
+  <div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="page-header">
+       <h2>Welcome to Admin
+       <span class="text-danger">
+       
+       <?php
+	   if(isset($_SESSION['admin'])){
+		   echo $_SESSION['admin'];
+		   
+	   }
+	   else{
+		   $_SESSION['admin']='';
+	   }
+	   ?></span></h2>
+      </div>
+    </div>
+  <!--  /* header */  -->  
+  <?php
+  		if(isset($_POST['add_room']))
+		{
+			insert_room();
+		}
   ?>
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="/admin/dashboard.php">Dashboard</a>
-          </li>
-          <li class="breadcrumb-item active">All Room</li>
-        </ol>
-
-        <!-- DataTables Example -->
-        <div class="card mb-3">
-          <div class="card-header">
-           <strong>All Room</strong>
-           <a href="add_room.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add Room</a>
-        </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                  <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <?php
+  
+          <div class="row">
+          
+          			<div class="col-md-6">
+                    	<form method="post">
+                        		<div class="form-group">
+                                	<label>Add Room</label>
+                                    <input type="text" name="room_type" class="form-control">
+                                </div>
+                                <button type="submit" name="add_room" class="btn btn-primary">
+                                Add Room
+                                </button>
+                        </form>
+                        <hr/>
+                          <!--  /* Update Category*/  --> 
+                          <?php if(isset($_GET['action'])&&$_GET['action']=='edit'){
+						  	
+								$room_id=$_GET['r_id'];
+								$query="select * from room_type where id='$room_id'";
+								$go_query=mysqli_query($connection,$query);
+								while
+								($out=mysqli_fetch_array($go_query))
+								{
+									$room_name=$out['type'];
+									?>
+                            
+                        
+                        <form method="post">
+                        		<div class="form-group">
+                                	<label>Update Category</label>
+                                    <input type="text" name="room_name" class="form-control" value="<?php echo $room_name ?>">
+                                </div>
+                                <button type="submit" name="update_room" class="btn btn-primary">
+                                Update Category
+                                </button>
+                        </form>
+                        <?php
+								}
+							}
+							?>
+                        
+                        <!--  /* Update Category*/  --> 
+                        
+                    </div>
+                    
+                    <div class="col-md-6">
+                    	<table class="table table-hover" >
+                        	<tr>
+                            	<th>ID</th>
+                                <th>Type</th>
+                                <th>Action</th>
+                            </tr>
+                            <!--  /* Table call ID Name Edit*/  --> 
+                            
+                            	<?php
 										$query="select*from room_type";
-                    $go_query=mysqli_query($connection,$query);
-                    $number = 1;
+										$go_query=mysqli_query($connection,$query);
 										while($row=mysqli_fetch_array($go_query))
 											{
-                        $room_id=$row['id'];
+												$room_id=$row['id'];
 												$room_type=$row['type'];
-                ?>
-										<tr>
-												<td><?php echo $number++; ?></td>
-												<td><?php echo $room_type; ?></td>
-												<td class='text-center'>
-                        <a class='text-info mr-2' href='update_room.php?action=edit&r_id=<?php echo $room_id;?>'><i class='fas fa-edit    '></i></a>
-                        <a class='text-danger' href='room_type.php?action=delete&r_id=<?php echo $room_id;?>' onclick="return confirm('Are you sure?')"><i class='fas fa-trash'></i></a>
-                        </td>
-                    </tr>
-                <?php
-                      }
-                ?>          
-                <tfoot>
-                  <tr>
-                    <th>Number</th>
-                    <th>Name</th>
-                    <th>Action</th>
-                  </tr>
-                </tfoot>
-                <tbody>
-                 
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+												echo"<tr>";
+												echo"<td>{$room_id}</td>";
+												echo"<td>{$room_type}</td>";
+												echo"<td><a href='room_type.php?action=delete&r_id={$room_id}'
+												onclick=\"return confirm('Are you sure?')\")>X</a>||
+												<a href='room_type.php?action=edit&r_id={$room_id}'>Edit</a></td>";
+												echo"</tr?>";
+												
+											}
+								?>
+                            
+                            <!--  /* Table call*/  --> 
+                        		
+                        </table>
+                    
+                    </div>
+          </div> 
+   <!--  /* end of row */  -->        
 
-      </div>
-      <!-- /.container-fluid -->
-
-      <!-- Sticky Footer -->
-      <footer class="sticky-footer">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright © Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-
-    </div>
-    <!-- /.content-wrapper -->
-
-  </div>
-  <!-- Bootstrap core JavaScript-->
- <?php
-  include ("layouts/footer.php"); 
-  include ("layouts/js.php");
- ?>
+</body>
+</html>

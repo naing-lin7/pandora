@@ -37,12 +37,30 @@
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fas fa-th-large"></i>
-      <span>Room Type</span></a>
+      <span>Room Category</span></a>
     </a>
     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-      <a class="dropdown-item" href="room_type.php">All Room</a>
-    <a class="dropdown-item" href="add_room.php">Add Room</a>
+      <a class="dropdown-item" href="room_type.php">All Room Category</a>
+    <a class="dropdown-item" href="add_room.php">Add Room Category</a>
     </div>
   </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-th-large"></i>
+      <span>Rooms</span></a>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+      <a class="dropdown-item" href="all_rooms.php">All Rooms</a>
+    <a class="dropdown-item" href="add_rooms.php">Add Rooms</a>
+    </div>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="booking.php">
+    <i class="fas fa-address-book"></i>
+      <span>Booking</span>
+    </a>
+  </li>
+  
+  
   
 </ul>

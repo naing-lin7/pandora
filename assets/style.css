@@ -1,0 +1,22 @@
+@charset "utf-8";
+/* CSS Document */
+.CusTop {
+	margin-top:50px;
+	height:auto;
+}
+
+.Top {
+	margin-top:50px;
+}
+
+.showname {
+	color:#09f;
+}
+
+.login-form {
+	width:500px;
+	margin:250px auto;
+	padding:20px;
+}
+
+

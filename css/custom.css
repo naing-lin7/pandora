@@ -1,0 +1,13 @@
+.single-room-area .room-content .room-feature h6 span{
+    white-space: nowrap;
+}
+
+.btn-color{
+    background: #1cc3b2;
+    color: white;
+    
+}
+
+.reg-form .form-group{
+    text-align: left;
+}

@@ -87,7 +87,7 @@
                   <select id="" class="form-control select-input" name="role" >
                     <option value="">Select Role</option>
                     <option value="admin" <?php if($row_user['role'] == "admin"){ echo "selected='true'"; } ?>>Admin</option>
-                    <option value="member" <?php if($row_user == "member"){ echo "selected='true'"; } ?>>Member</option>
+                    <option value="member" <?php if($row_user['role'] == "member"){ echo "selected='true'"; } ?>>Member</option>
                   </select>
                   <?php if($role_err != Null){ ?>
                     <small class="text-danger"><i class="fas fa-exclamation-triangle"></i> <?php echo $role_err;?> </small>
