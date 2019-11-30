@@ -304,3 +304,102 @@ function delRoom(){
     $del_query="delete from room where id='$id'";
     $go_query=mysqli_query($connection,$del_query);
 }
+
+function addNews(){
+    global $connection;
+    $news_name=$_POST['name'];
+    $news_about=$_POST['about'];
+    $news_date=$_POST['date'];
+    $news_photo=$_FILES['photo']['name'];
+    $news_name_err='';
+    $news_date_err='';
+    $news_about_err='';
+    $news_photo_err='';
+    if(empty($news_name))
+    {
+    $news_name_err = "Please fill name.";
+    }
+elseif (empty($news_about)) 
+{
+    $news_about_err = "Please fill about.";
+}
+
+elseif (empty($news_date)) 
+{
+    $news_date_err = "Please fill date.";
+}
+
+elseif($news_photo==""){
+  echo "<script>window.alert('Choose Image')</script>";
+}
+else{
+$query="insert into news_table(name,about,date,photo) values('$news_name','$news_about','$news_date','$news_photo')";
+        $go_query=mysqli_query($connection,$query);
+       if(!$go_query){
+        die("QUERY FAILED".mysqli_error($connection));   
+       }
+       else{
+           echo "<script language=\"javascript\">window.alert('successfully inserted')</script>";
+           move_uploaded_file($_FILES['photo']['name'],'../images/'.$news_photo);
+           echo "<script> location.href='news.php'; </script>";
+            
+       }
+     
+ }
+ 
+}
+
+
+function delNews(){
+    global $connection;
+    $news_id=$_GET['id'];
+    $query="delete from news_table where id='$news_id'";
+    $go_query=mysqli_query($connection,$query);
+
+}
+
+function updateNews(){
+    global $connection;
+            $news_name=$_POST['name'];
+            $news_about=$_POST['about'];
+			$news_date=$_POST['date'];
+			$news_photo=$_FILES['photo']['name'];
+			$news_name_err='';
+			$news_date_err='';
+			$news_about_err='';
+			$news_photo_err='';
+            $news_id       = $_GET["id"];
+    
+    if(isset($_POST['update_news'])){
+        if(empty($news_name))
+            {
+            $news_name_err = "Please fill name.";
+            }
+        elseif (empty($news_about)) 
+        {
+            $news_about_err = "Please fill about.";
+        }
+
+        elseif (empty($news_date)) 
+        {
+            $news_date_err = "Please fill date.";
+        }
+        
+	 elseif($news_photo==""){
+		  echo "<script>window.alert('Choose Image')</script>";
+	 }
+	 else{ $query = "update news_table set name='$news_name',about='$news_about',date='$news_date',photo='$news_photo' where id='$news_id'";
+        $run_query = mysqli_query($connection,$query);
+        if($run_query){
+           return "success";
+		   move_uploaded_file($_FILES['photo']['name'],'../images/'.$news_photo);
+        }else{
+            $create_message = "Fail to update news.";
+				   
+					
+			   }
+			 
+		 }
+		 
+        }
+    }

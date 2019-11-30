@@ -54,6 +54,18 @@
     <a class="dropdown-item" href="add_rooms.php">Add Rooms</a>
     </div>
   </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-th-large"></i>
+      <span>News</span></a>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+      <a class="dropdown-item" href="news.php">All News</a>
+    <a class="dropdown-item" href="add_news.php">Add News</a>
+    </div>
+  </li>
+
   <li class="nav-item active">
     <a class="nav-link" href="booking.php">
     <i class="fas fa-address-book"></i>
