@@ -1,8 +1,9 @@
 <?php
- include 'include/header.php';
-?>
+    include 'include/header.php';
+  ?>
+<!--header-->
 
-	<div id="booking" class="section">
+<div id="booking" class="section">
 		<div class="section-center">
 			<div class="container">
 				<div class="row">
@@ -24,52 +25,43 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
-											<input class="form-control" type="email">
-											<span class="form-label">Email</span>
+											<input class="form-control" type="text">
+											<span class="form-label">Total Price</span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-6">
-										<div class="form-group">
-											<input class="form-control" type="tel">
-											<span class="form-label">Phone</span>
-										</div>
-									</div>
-									<div class="col-md-3 col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Rooms</span>
+                                    <div class="form-group">
+											<span class="form-label">Room</span>
 											<select class="form-control">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
+												<option>Single Room</option>
+												<option>Double Room</option>
+												<option>Romence Room</option>
 											</select>
 											<span class="select-arrow"></span>
 										</div>
 									</div>
 									<div class="col-md-3 col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Guests</span>
-											<select class="form-control">
-												<option>1 Person</option>
-												<option>2 People</option>
-												<option>3 People</option>
-											</select>
-											<span class="select-arrow"></span>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
+                                    <div class="form-group">
 											<input class="form-control" type="date" required>
 											<span class="form-label">Check In</span>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
+									<div class="col-md-3 col-sm-6">
+                                    <div class="form-group">
 											<input class="form-control" type="date" required>
-											<span class="form-label">Check Out</span>
+											<span class="form-label">Check In</span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+                                            <span class="form-label">Message</span>
+											<textarea class="form-control" type="text">
+                                            
+											</textarea>
 										</div>
 									</div>
 								</div>
@@ -84,7 +76,8 @@
 		</div>
 	</div>
 
-	<script src="js/jquery.min.js"></script>
+
+    <script src="js/jquery.min.js"></script>
 	<script>
 		$('.form-control').each(function () {
 			floatedLabel($(this));
@@ -103,9 +96,6 @@
 			}
 		}
 	</script>
-
-</body>
-<!-- This templates was made by Colorlib (https://colorlib.com) -->
 <?php
 	include 'include/footer.php';
 ?>

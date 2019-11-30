@@ -34,7 +34,7 @@
         <div class="card mb-3">
           <div class="card-header">
            <strong>All Room</strong>
-           <a href="add_room.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add Room</a>
+           <a href="add_category.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add Room</a>
         </div>
           <div class="card-body">
             <div class="table-responsive">
