@@ -41,7 +41,7 @@
     </a>
     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
       <a class="dropdown-item" href="room_type.php">All Room Category</a>
-    <a class="dropdown-item" href="add_room.php">Add Room Category</a>
+    <a class="dropdown-item" href="add_category.php">Add Room Category</a>
     </div>
   </li>
   <li class="nav-item dropdown">
