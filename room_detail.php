@@ -1,5 +1,11 @@
 
-   <?php include 'include/header.php' ;?> 
+   <?php    
+        error_reporting(1);
+        include 'include/header.php';
+        include 'include/function.php' ;
+        $checkin 	= date('Y-m-d', time());
+
+    ?> 
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>
@@ -8,11 +14,30 @@
 
     <!-- Header Area Start -->
     <?php 
-
         $room_id    = $_GET['room_id'];
         $query      = "select * from room where id='$room_id'";
         $get_room   = mysqli_query($connection,$query);
         $room       = mysqli_fetch_assoc($get_room);
+        $room_id = $room['id'];
+        $booking_query = "select * from booking where room_id='$room_id'";
+        $get_booking  = mysqli_query($connection,$booking_query);
+        $booking_array = mysqli_fetch_assoc($get_booking);
+        $book_checkin = date('Y-m-d',strtotime($booking_array['checkin']));
+        $book_checkout = date('Y-m-d',strtotime($booking_array['checkout']));
+        $status        = "";
+        if($checkin >= $book_checkin && $checkin <= $book_checkout){
+            $status =  "Not Avaliable";
+        }else{
+            $status = "Avaliable";
+        }
+
+        if(isset($_POST['booknow'])){
+            if(createBooking() == 'success'){
+                echo "<script>alert('Booking is successfully, Thank you for your booking.');window.location.href='/';</script>";
+            }else{
+                echo "<script>alert('Fail Booking! Sorry, Please contact our customer service (+95 123 123 123).');</script>";
+            }
+        }
 
     ?>
 
@@ -49,12 +74,13 @@
                                         $gallery = explode(',',mysqli_fetch_assoc($get_gallery)['gallery']);
                                         $i = 0;
                                         foreach($gallery as $image){
+                                            if($image != NULL){
                                             $i++;
                                     ?>
                                     <div class="carousel-item <?php if($i == 1){  echo 'active';}?>">
                                         <img src="admin/room_gallery/<?php echo $image;?>" class="d-block w-100" alt="">
                                     </div>
-                                    <?php } ?>
+                                    <?php }} ?>
                                    
                                 </div>
 
@@ -66,11 +92,12 @@
                                         $gallery = explode(',',mysqli_fetch_assoc($get_gallery)['gallery']);
                                         $i = 0;
                                         foreach($gallery as $image){
+                                            if($image != NULL){
                                     ?>
                                     <li data-target="#room-thumbnail--slide" data-slide-to="<?php echo $i++;?>" class="<?php if($i == 1){  echo 'active';}?>">
                                         <img src="admin/room_gallery/<?php echo $image;?>" class="d-block w-100" alt="">
                                     </li>
-                                    <?php } ?>
+                                    <?php }} ?>
                                     
                                 </ol>
                             </div>
@@ -85,7 +112,7 @@
                                 echo mysqli_fetch_assoc($go_query)['type'];
                             ?></span></h6>
                             <h6>Price: <span><?php echo number_format($room['price']);?> MMK</span></h6>
-                            <h6>Status: <span><?php echo $room['status'] ? "Avaliable" : "Not Avaliable" ?></span></h6>
+                            <h6>Status: <span><?php echo $status; ?></span></h6>
                             <h6>Services: <span>Wifi, television ...</span></h6>
                         </div>
                     </div>
@@ -95,59 +122,88 @@
                 <div class="col-12 col-lg-4">
                     <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mb-100">
-                        <form action="#" method="post">
+                        <form method="post" autocomplete="off">
+                            <h3>Booking Form</h3>
+                            <?php 
+                                if(isset($_SESSION['member_success']) || isset($_SESSION['auth_success'])){
+                                    error_reporting(1);
+                                    $user_id    = $_SESSION['member_success'] ? $_SESSION['member_success']['id'] : $_SESSION['auth_success']['id'];
+                                    $query      = "select * from users where id='$user_id'";
+                                    $get_user   = mysqli_query($connection,$query);
+                                    $row_user   = mysqli_fetch_assoc($get_user);
+                            ?>
+                                <input type="hidden" value="<?php echo $user_id; ?>" name="user_id">
+                                <input type="hidden" value="<?php echo $room['id']; ?>" name="room_id">
+                                <input type="hidden" value="<?php echo $room['price']; ?>" name="price">
+                                <div class="form-group mb-30">
+                                <label for="name">Customer Information</label>
+                                <div class="row no-gutters">
+                                    <div class="col-6">
+                                        <input type="text" class="input-small form-control" value="<?php if($oldData['name'] != ''){echo $oldData['name'];}else{echo $row_user['user_name'];} ?>" name="name" id="name" placeholder="Name">
+                                        <?php if($error['name'] != ""){?>
+                                            <small class="text-danger"><i class="fas fa-exclamation-triangle    "></i> <?php echo $error['name'];?></small>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="input-small form-control" value="<?php if($oldData['email'] != ''){echo $oldData['email'];}else{echo $row_user['email'];} ?>" name="email" placeholder="Email">
+                                        <?php if($error['email'] != ""){?>
+                                            <small class="text-danger"><i class="fas fa-exclamation-triangle    "></i> <?php echo $error['email'];?></small>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <input type="number" name="phone" value="<?php if($oldData['phone'] != ''){echo $oldData['phone'];}else{echo $row_user['phone_number'];} ?>" placeholder="Phone" class="form-control">
+                                        <?php if($error['phone'] != ""){?>
+                                            <small class="text-danger"><i class="fas fa-exclamation-triangle    "></i> <?php echo $error['phone'];?></small>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                </div>
+                            <?php
+                                }
+                            ?>
                             <div class="form-group mb-30">
                                 <label for="checkInDate">Date</label>
                                 <div class="input-daterange" id="datepicker">
                                     <div class="row no-gutters">
                                         <div class="col-6">
-                                            <input type="text" class="input-small form-control" name="checkInDate" id="checkInDate" placeholder="Check In">
+                                            <input type="text" class="input-small form-control" value="<?php if($oldData['checkin'] != ''){echo $oldData['checkin'];} ?>" name="checkin" id="checkInDate" placeholder="Check In">
+                                            <?php if($error['checkin'] != ""){?>
+                                            <small class="text-danger"><i class="fas fa-exclamation-triangle    "></i> <?php echo $error['checkin'];?></small>
+                                        <?php } ?>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" class="input-small form-control" name="checkOutDate" placeholder="Check Out">
+                                            <input type="text" class="input-small form-control" value="<?php if($oldData['checkout'] != ''){echo $oldData['checkout'];} ?>" name="checkout" placeholder="Check Out">
+                                            <?php if($error['checkout'] != ""){?>
+                                            <small class="text-danger"><i class="fas fa-exclamation-triangle    "></i> <?php echo $error['checkout'];?></small>
+                                        <?php } ?>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-30">
-                                <label for="guests">Guests</label>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <select name="adults" id="guests" class="form-control">
-                                            <option value="adults">Adults</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-6">
-                                        <select name="children" id="children" class="form-control">
-                                            <option value="children">Children</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group mb-50">
-                                <div class="slider-range">
-                                    <div class="range-price">Max Price: $0 - $3000</div>
-                                    <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">
-                                        <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <textarea name="message" class="form-control pt-2" placeholder="Message" id="" rows="10" style="height: 127px;"><?php if($oldData['message'] != ''){echo $oldData['message'];} ?></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn roberto-btn w-100">Check Available</button>
+                                <?php 
+                                    if(isset($_SESSION['member_success']) || isset($_SESSION['auth_success'])){
+                                        if($room['status'] == 1 && $status =="Avaliable" ){
+                                ?>
+                                    <input type="submit" name="booknow" value="submit" class="btn roberto-btn w-100" onclick="return confirm('Are you sure? Do you want to booking?')" value="Book Now">
+                                <?php }else{
+                                ?>
+                                    <button type="button" name="booknow" class="btn roberto-btn w-100" onclick="return alert('Sorry! This room is not avaliable.')">Book Now</button>
+                                <?php
+                                    } }
+                                    else{
+                                ?>
+                                  <button type="button" class="btn roberto-btn w-100" data-toggle="modal" data-target="#loginModal">Book Now</button>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </form>
                     </div>

@@ -57,7 +57,7 @@
 
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-th-large"></i>
+    <i class="far fa-newspaper"></i>
       <span>News</span></a>
     </a>
     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
@@ -67,11 +67,23 @@
   </li>
 
   <li class="nav-item active">
-    <a class="nav-link" href="booking.php">
+    <a class="nav-link" href="all_booking.php">
     <i class="fas fa-address-book"></i>
-      <span>Booking</span>
+      <span>All Booking</span>
     </a>
   </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-photo-video"></i>
+      <span>Slider</span></a>
+    </a>
+    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+      <a class="dropdown-item" href="all_slider.php">All Slider</a>
+    <a class="dropdown-item" href="add_slider.php">Add Slider</a>
+    </div>
+  </li>
+
   
   
   

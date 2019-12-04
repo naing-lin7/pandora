@@ -1,7 +1,7 @@
 
-      <?php
+<?php
     include 'include/header.php';
-  ?>
+?>
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>

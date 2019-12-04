@@ -31,6 +31,13 @@
            <a href='all_rooms.php?action=delete&id=<?php echo $room['id'];?>' onclick="return confirm('Are you sure?')"class="btn btn-danger btn-sm float-right ml-1"><i class="fas fa-trash"></i> Delete Room</a></td>
            <a href="update_room.php?id=<?php echo $room['id'];?>" class="btn btn-secondary btn-sm float-right ml-1"> <i class="fas fa-edit    "></i> Edit Room</a>
            <a href="add_rooms.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add Room</a>
+           <?php 
+              if(isset($_GET['url'])){
+            ?>
+              <a href="<?php echo urldecode($_GET['url']); ?>" class="btn btn-success btn-sm float-right mr-2"> <i class="fas fa-arrow-left    "></i> Back</a>
+            <?php
+              }
+           ?>
         </div>
           <div class="card-body">
           <table class="table table-bordered" width="100%" cellspacing="0">

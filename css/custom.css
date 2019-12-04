@@ -11,3 +11,22 @@
 .reg-form .form-group{
     text-align: left;
 }
+
+.checkin-error{
+    position: absolute;
+    top: 85px;
+}
+
+.checkout-error{
+    position: absolute;
+    top: 85px;
+}
+.single-room-area .room-content h2{
+    font-size: 21px !important;
+}
+.single-room-area .room-content h4{
+    font-size: 18px !important;
+}
+.single-room-area .room-content .room-feature{
+    margin-bottom: 0px !important;
+}

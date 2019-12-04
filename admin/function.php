@@ -319,33 +319,33 @@ function addNews(){
     {
     $news_name_err = "Please fill name.";
     }
-elseif (empty($news_about)) 
-{
-    $news_about_err = "Please fill about.";
-}
+    elseif (empty($news_about)) 
+    {
+        $news_about_err = "Please fill about.";
+    }
 
-elseif (empty($news_date)) 
-{
-    $news_date_err = "Please fill date.";
-}
+    elseif (empty($news_date)) 
+    {
+        $news_date_err = "Please fill date.";
+    }
 
-elseif($news_photo==""){
-  echo "<script>window.alert('Choose Image')</script>";
-}
-else{
-$query="insert into news_table(name,about,date,photo) values('$news_name','$news_about','$news_date','$news_photo')";
-        $go_query=mysqli_query($connection,$query);
-       if(!$go_query){
-        die("QUERY FAILED".mysqli_error($connection));   
-       }
-       else{
-           echo "<script language=\"javascript\">window.alert('successfully inserted')</script>";
-           move_uploaded_file($_FILES['photo']['name'],'../images/'.$news_photo);
-           echo "<script> location.href='news.php'; </script>";
-            
-       }
-     
- }
+    elseif($news_photo==""){
+    echo "<script>window.alert('Choose Image')</script>";
+    }
+    else{
+    $query="insert into news_table(name,about,date,photo) values('$news_name','$news_about','$news_date','$news_photo')";
+            $go_query=mysqli_query($connection,$query);
+        if(!$go_query){
+            die("QUERY FAILED".mysqli_error($connection));   
+        }
+        else{
+            echo "<script language=\"javascript\">window.alert('successfully inserted')</script>";
+            move_uploaded_file($_FILES['photo']['name'],'../images/'.$news_photo);
+            echo "<script> location.href='news.php'; </script>";
+                
+        }
+        
+    }
  
 }
 
@@ -356,6 +356,16 @@ function delNews(){
     $query="delete from news_table where id='$news_id'";
     $go_query=mysqli_query($connection,$query);
 
+}
+
+function delBooking(){
+    global $connection;
+    $booking_id=$_GET['id'];
+    $query="delete from booking where id='$booking_id'";
+    $go_query=mysqli_query($connection,$query);
+    if($go_query){
+        return "success";
+    }
 }
 
 function updateNews(){
@@ -403,3 +413,89 @@ function updateNews(){
 		 
         }
     }
+
+function addSlider(){
+        global $connection;
+        $slider_caption         = $_POST['caption'];
+        $slider_photo           = $_FILES['photo']['name'];
+        $slider_caption_err     = '';
+        $slider_photo_err       = '';
+        if(empty($slider_caption))
+        {
+            $slider_caption_err = "Please fill caption.";
+        }elseif($slider_photo==""){
+            echo "<script>window.alert('Choose Image')</script>";
+        }
+    else{
+        $query="insert into slider(caption,image) values('$slider_caption','$slider_photo')";
+        $go_query=mysqli_query($connection,$query);
+           if(!$go_query){
+            die("QUERY FAILED".mysqli_error($connection));   
+           }
+           else{
+               echo "<script language=\"javascript\">window.alert('successfully inserted')</script>";
+               move_uploaded_file($_FILES['photo']['tmp_name'],'slide_image/'.$slider_photo);
+               echo "<script> location.href='all_slider.php'; </script>";
+                
+           }
+         
+     }
+     
+    }
+
+function delSlider(){
+        global $connection;
+        $slider_id=$_GET['id'];
+        $old_img = "select * from slider where id='$slider_id'";
+        $get_oldimg = mysqli_query($connection,$old_img);
+        $old_img_array = mysqli_fetch_assoc($get_oldimg);
+        $image = "slide_image/".$old_img_array['image'];
+            if (file_exists($image)) {
+                unlink($image);
+             }
+        $query="delete from slider where id='$slider_id'";
+        $go_query=mysqli_query($connection,$query);
+    
+    }
+
+function updateSlider(){
+        global $connection;
+                $slider_caption         = $_POST['caption'];
+                $slider_photo           = $_FILES['photo']['name'];
+                $slider_caption_err     = '';
+                $slider_photo_err       = '';
+                $slider_id              = $_GET["id"];
+        
+        if(isset($_POST['update_slider'])){
+            if(empty($slider_caption)){
+                $slider_caption_err = "Please fill caption.";
+            }else{
+                        $old_img = "select * from slider where id='$slider_id'";
+                        $get_oldimg = mysqli_query($connection,$old_img);
+                        $old_img_array = mysqli_fetch_assoc($get_oldimg);
+                        if($slider_photo == ""){
+                            $image_name = $old_img_array['image'];
+                        }else{
+                            $image = "slide_image/".$old_img_array['image'];
+                            if (file_exists($image)) {
+                                unlink($image);
+                             }
+                            $image_name = $slider_photo;
+                            move_uploaded_file($_FILES['photo']['tmp_name'],'slide_image/'.$image_name);
+                        }
+                        $query = "update slider set caption='$slider_caption',image='$image_name' where id='$slider_id'";
+                        $run_query = mysqli_query($connection,$query);
+                        if($run_query){
+                        echo "<script language=\"javascript\">window.alert('successfully inserted')</script>";
+                        echo "<script> location.href='all_slider.php'; </script>";
+                        }else{
+                            $create_message = "Fail to update slider.";
+                       
+                        
+                   }
+                 
+             }
+             
+            }
+}
+    

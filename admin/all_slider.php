@@ -1,22 +1,17 @@
 <?php
+error_reporting(1);
   include ("../database/connection.php");
   include ("php_scripts/auth.php");
- 
+  
   include ("layouts/css.php");
   include ("layouts/header.php");
   include ("layouts/side_bar.php");
   include ("function.php");
+
+  if(isset($_GET['action']) =='delete'){
+    delSlider();
+  }
 ?>
- <?php
-			if(isset($_GET['action'])&&$_GET['action']=='delete'){
-				del_room();
-			}
-			if(isset($_POST['update_room']))
-			
-			{
-				update_room();
-			}
-  ?>
 
     <div id="content-wrapper">
 
@@ -27,55 +22,55 @@
           <li class="breadcrumb-item">
             <a href="/admin/dashboard.php">Dashboard</a>
           </li>
-          <li class="breadcrumb-item active">All Room</li>
+          <li class="breadcrumb-item active">All Slider</li>
         </ol>
 
         <!-- DataTables Example -->
         <div class="card mb-3">
           <div class="card-header">
-           <strong>All Room</strong>
-           <a href="add_room.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add Room</a>
+           <strong>All Slider</strong>
+           <a href="add_slider.php" class="btn btn-info btn-sm float-right"> <i class="fas fa-plus-circle    "></i> Add Slider</a>
         </div>
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                   <tr>
-                    <th>Number</th>
+                    <th>No</th>
                     <th>Name</th>
+                    <th>Photo</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <?php
-										$query="select*from room_type";
-                    $go_query=mysqli_query($connection,$query);
-                    $number = 1;
-										while($row=mysqli_fetch_array($go_query))
-											{
-                        $room_id=$row['id'];
-												$room_type=$row['type'];
-                ?>
-										<tr>
-												<td><?php echo $number++; ?></td>
-												<td><?php echo $room_type; ?></td>
-												<td class='text-center'>
-                        <a class='text-info mr-2' href='update_type.php?action=edit&r_id=<?php echo $room_id;?>'><i class='fas fa-edit    '></i></a>
-                        <a class='text-danger' href='room_type.php?action=delete&r_id=<?php echo $room_id;?>' onclick="return confirm('Are you sure?')"><i class='fas fa-trash'></i></a>
-                        </td>
-                    </tr>
-                <?php
-                      }
-                ?>          
                 <tfoot>
                   <tr>
-                    <th>Number</th>
+                    <th>No</th>
                     <th>Name</th>
+                    <th>Photo</th>
                     <th>Action</th>
                   </tr>
                 </tfoot>
-                <tbody>
-                 
-                </tbody>
+                <body>
+                <?php 
+                   $query          = "select * from slider";
+                   $get_slider     = mysqli_query($connection,$query);
+                   $number = 1;
+                    while($slider = mysqli_fetch_array($get_slider)){
+						$slider_photo=$slider["image"];
+                ?>
+                  <tr>
+                    <td><?php echo $number++; ?></td>
+                  	<td><?php echo $slider["caption"]; ?></td>
+                    <td><?php echo "<img src='slide_image/{$slider_photo}' width='100' height='100'>"; ?></td>
+                    
+                    <td class="text-center">
+                    <a href="update_slider.php?id=<?php echo $slider['id'];?>" class="mr-2 text-info"><i class="fas fa-user-edit    "></i></a> 
+                      <a href='all_slider.php?action=delete&id=<?php echo $slider['id'];?>' onclick="return confirm('Are you sure?')"class="text-danger"><i class="fas fa-trash"></i></a></td>
+                  </tr>
+                <?php 
+                        }
+                ?>
+                </body>
               </table>
             </div>
           </div>

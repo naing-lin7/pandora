@@ -4,6 +4,9 @@
     include ("php_scripts/login.php");
 
     include ("layouts/css.php");
+    if(isset($_SESSION['member_success'])){
+      echo "<script>window.history.back();</script>";
+    }
 ?>
 
 <body class="bg-dark">
@@ -60,10 +63,10 @@
               </label>
             </div>
           </div>
-          <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
+          <button type="submit" name="login" value="submit" class="btn btn-primary btn-block">Login</button>
         </form>
         <div class="text-center">
-          <a class="d-block small mt-3" href="register.html">Register an Account</a>
+          <a class="d-block small mt-3" href="../register.php">Register an Account</a>
           <!-- <a class="d-block small" href="forgot-password.html">Forgot Password?</a> -->
         </div>
       </div>
