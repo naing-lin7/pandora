@@ -59,7 +59,7 @@
             <div class="form-row">
             <div class="col-md-12">
               <div class="form-label-group">
-                <textarea class="form-control summernote" name="about" rows="4" required></textarea>
+                <textarea class="form-control" name="about" rows="4" required></textarea>
               </div>
             </div>
             </div>

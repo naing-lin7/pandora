@@ -1,4 +1,10 @@
-
+<?php
+include 'database/connection.php';
+ include 'include/function.php';
+   if(isset($_POST['send'])){
+       send();
+   }
+?>
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader"></div>
@@ -108,7 +114,7 @@
                                     <textarea name="message" class="form-control mb-30" placeholder="Your Message"></textarea>
                                 </div>
                                 <div class="col-12 text-center wow fadeInUp" data-wow-delay="100ms">
-                                    <button type="submit" class="btn roberto-btn mt-15">Send Message</button>
+                                    <button type="submit" class="btn roberto-btn mt-15" name="send">Send Message</button>
                                 </div>
                             </div>
                         </form>
